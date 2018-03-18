@@ -59,3 +59,54 @@ The visualizer is a simple web server written in `Node.js`. It graphs the scrape
 3. Open one of the URLs displayed by the previous command (one is for daily, the other for weekly comparison). 
 
 For a full list of command-line options, run `node server.js --help`.
+
+## Help
+
+Command info for the scraper:
+```
+$ ./read_value.py --help
+usage: read_value.py [-h] [--default VALUE] [--database URI] [--name NAME]
+                     [--collection COLL] [--use-float] [--date] [--verbose]
+                     regex url
+
+Read a value from a URL
+
+positional arguments:
+  regex              the regular expression with the capture group "value"
+                     matching the value to be recorded
+  url                the URL
+
+optional arguments:
+  -h, --help         show this help message and exit
+  --default VALUE    default value to be returned if there is an error and
+                     --verbose is not set (default is "0")
+  --database URI     store the result in a database
+  --name NAME        the database name to store the result in (default is
+                     "results")
+  --collection COLL  the database collection to store the result in (default
+                     is "results")
+  --use-float        specify that the value should be stored as a float
+  --date, -d         specify that the date should be printed
+  --verbose, -v      increase level of verbosity (can be supplied multiple
+                     times)
+```
+
+Command info for the visualizer:
+
+```
+$ node server.js --help
+server.js [options]
+
+Options:
+  --host        the hostname                     [string] [default: "127.0.0.1"]
+  --port        the port to listen on                   [number] [default: 3000]
+  --default     number to display if a data point is not defined
+                                                           [number] [default: 0]
+  --interval    the interval (in minutes) that data points should be graphed
+                                                          [number] [default: 15]
+  --database    the URI to the database server
+                                [string] [default: "mongodb://127.0.0.1:27017/"]
+  --db          the name of the database           [string] [default: "results"]
+  --collection  the name of the database collection[string] [default: "results"]
+  --help        show help                                              [boolean]
+```
