@@ -1,4 +1,4 @@
-// Defined variables: queryResult, interval, defaultValue
+// Defined variables: queryResult, interval
 
 // Define colors for the datasets
 var colors = [
@@ -41,7 +41,7 @@ var generateWeeklyDatasets = () => {
       var hour = Math.floor(i / 60) % 24;
       var minute = i % 60;
       var result = doc.data.find(res => res.day == day && res.hour == hour && res.minute == minute);
-      var value = result == undefined ? defaultValue : result.value;
+      var value = result == undefined ? null : result.value;
       data.push(value);
     }
     datasets.push({
@@ -89,7 +89,7 @@ var generateDailyDatasets = () => {
       var hour = Math.floor(i / 60) % 24;
       var minute = i % 60;
       var result = doc.data.find(res => res.hour == hour && res.minute == minute);
-      var value = result == undefined ? defaultValue : result.value;
+      var value = result == undefined ? null : result.value;
       data.push(value);
     }
     datasets.push({

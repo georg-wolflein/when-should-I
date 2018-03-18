@@ -100,8 +100,6 @@ server.js [options]
 Options:
   --host        the hostname                     [string] [default: "127.0.0.1"]
   --port        the port to listen on                   [number] [default: 3000]
-  --default     number to display if a data point is not defined
-                                                           [number] [default: 0]
   --interval    the interval (in minutes) that data points should be graphed
                                                           [number] [default: 15]
   --database    the URI to the database server

@@ -17,11 +17,6 @@ var args = require('yargs')
     describe: 'the port to listen on',
     type: 'number'
   })
-  .option('default', {
-    default: 0,
-    describe: 'number to display if a data point is not defined',
-    type: 'number'
-  })
   .option('interval', {
     default: 15,
     describe: 'the interval (in minutes) that data points should be graphed',
@@ -107,7 +102,6 @@ var dataRequestHandler = (req, res, weekly = true) => {
     db.collection(args.collection).aggregate(weekly ? weeklyAggregate : dailyAggregate).toArray((err, result) => {
       if (err) throw err;
       res.write("var interval = " + args.interval + ";\n");
-      res.write("var defaultValue = " + args.default + ";\n");
       res.write("var queryResult = " + JSON.stringify(result) + ";\n\n");
       res.end();
       conn.close();
