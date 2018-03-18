@@ -1,3 +1,7 @@
+/**
+ * The Node.js server for visualizing the data.
+ */
+
 var MongoClient = require('mongodb').MongoClient;
 var express = require('express');
 var fs = require('fs');
@@ -42,12 +46,16 @@ var args = require('yargs')
   .version(false)
   .argv
 
+// Create express app (send index.html file)
 var app = express();
 
+// Define main route
 app.get('/', (req, res) => res.sendFile(__dirname + '/index.html'));
 
+// Define chart.js route (send chart.js file)
 app.get('/chart.js', (req, res) => res.sendFile(__dirname + '/chart.js'));
 
+// Define data.js route which queries the database and returns the result as a JS file 
 app.get('/data.js', (req, res) => {
   MongoClient.connect(args.database, (err, conn) => {
     if (err) throw err;
@@ -85,4 +93,5 @@ app.get('/data.js', (req, res) => {
   });
 });
 
-app.listen(args.port, args.host, () => console.log('navigate to http://' + args.host + ':' + args.port + '/'));
+// Start the server
+app.listen(args.port, args.host, () => console.log('started server, navigate to http://' + args.host + ':' + args.port + '/'));

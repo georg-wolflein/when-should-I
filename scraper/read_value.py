@@ -16,6 +16,7 @@ USE_FLOAT = False
 class RegexError(Exception): pass
 
 def read_url(url):
+  """Get the HTML contents of a web page."""
   fp = req.urlopen(url)
   mybytes = fp.read()
   html = mybytes.decode("utf8")
@@ -23,6 +24,7 @@ def read_url(url):
   return html
 
 def get_value(regex, html):
+  """Get the value from the HTML code."""
   result = re.search(regex, html)
   if result == None:
     raise RegexError("could not match regex")
@@ -31,6 +33,7 @@ def get_value(regex, html):
   return result.group("value")
 
 def write_to_database(value, date, uri, database, collection):
+  """Write the value to the database."""
   client = MongoClient(uri)
   db = client[database]
   coll = db[collection]
@@ -40,6 +43,7 @@ def write_to_database(value, date, uri, database, collection):
   coll.insert_one(doc)
 
 def main(regex, url, default, uri, database, collection):
+  """Main function for getting the value, outputting, and saving to database."""
   now = datetime.now().replace(second=0, microsecond=0)
   date = now.strftime(DATE_FORMAT) if DISPLAY_DATE else ""
   result = ""
@@ -61,6 +65,7 @@ def main(regex, url, default, uri, database, collection):
     print(date + str(result))
 
 if __name__ == "__main__":
+  # Define argument parser
   parser = argparse.ArgumentParser(description="Read a value from a URL")
   parser.add_argument("regex", type=str, help="the regular expression with the capture group \"value\" matching the value to be recorded")
   parser.add_argument("url", type=str, help="the URL")
@@ -75,4 +80,5 @@ if __name__ == "__main__":
   DISPLAY_DATE = args.date
   VERBOSITY = args.verbose
   USE_FLOAT = args.float
+  # Execute main function
   main(args.regex, args.url, args.default, args.database, args.name, args.collection)

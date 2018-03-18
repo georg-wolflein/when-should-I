@@ -1,7 +1,6 @@
 // Defined variables: queryResult, interval, defaultValue
 
-var graphData = [];
-
+// Define colors for the datasets
 var colors = [
   'rgb(255, 99, 132)',
   'rgb(255, 159, 64)',
@@ -11,6 +10,7 @@ var colors = [
   'rgb(153, 102, 255)',
   'rgb(201, 203, 207)'];
 
+// Create a list of the x-axis labels
 var labels = [];
 var weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 for (var day = 0; day < weekdays.length; day++) {
@@ -24,6 +24,7 @@ for (var day = 0; day < weekdays.length; day++) {
   }
 }
 
+// Populate the datasets
 // Data is stored in a variable named 'queryResult'
 var datasets = [];
 queryResult.forEach(doc => {
@@ -53,28 +54,20 @@ datasets.map(function (x) {
   return x;
 });
 
+/**
+ * Create the chart.
+ * @param {*} elem the HTML chart element
+ */
 var populateChart = elem => {
   var ctx = elem.getContext('2d');
   var chart = new Chart(ctx, {
-    // The type of chart we want to create
+    // The type of chart to be created
     type: 'line',
 
-    // The data for our dataset
+    // The data for the dataset
     data: {
       labels: labels,
       datasets: datasets
-    },
-
-    // Configuration options go here
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            //suggestedMin: 0,
-            //suggestedMax: 100
-          }
-        }]
-      }
     }
   });
 };
