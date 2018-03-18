@@ -12,6 +12,7 @@ DATE_FORMAT = "%Y-%m-%d %H:%M | "
 VERBOSITY = 0
 DISPLAY_DATE = False
 USE_FLOAT = False
+IGNORE_VALUE = None
 
 class RegexError(Exception): pass
 
@@ -50,7 +51,7 @@ def main(regex, url, default, uri, database, collection):
   try:
     html = read_url(url)
     result = get_value(regex, html)
-    if uri != None:
+    if uri != None and result != IGNORE_VALUE:
       write_to_database(result, now, uri, database, collection)
   except KeyboardInterrupt:
     raise
@@ -74,11 +75,13 @@ if __name__ == "__main__":
   parser.add_argument("--name", type=str, metavar="NAME", default="results", help="the database name to store the result in (default is \"results\")")
   parser.add_argument("--collection", type=str, metavar="COLL", default="results", help="the database collection to store the result in (default is \"results\")")
   parser.add_argument("--use-float", action="store_true", dest="float", help="specify that the value should be stored as a float")
+  parser.add_argument("--ignore", type=str, metavar="VALUE", help="do not write to the database if this value occurs")
   parser.add_argument("--date", "-d", action="store_true", help="specify that the date should be printed")
   parser.add_argument("--verbose", "-v", action="count", help="increase level of verbosity (can be supplied multiple times)", default=0)
   args = parser.parse_args()
   DISPLAY_DATE = args.date
   VERBOSITY = args.verbose
   USE_FLOAT = args.float
+  IGNORE_VALUE = args.ignore
   # Execute main function
   main(args.regex, args.url, args.default, args.database, args.name, args.collection)
