@@ -6,7 +6,7 @@
 This project provides a two-part solution for finding the optimum time of day or week to carry out a certain task:
 
 1. A _scraper_ that periodically queries a defined website to record the current value of the service (such as price, occupancy, etc.).
-2. A _visualizer_ that visualizes the scraped data in a graph that allows week-by-week comparison, enabling you to make an informed decision. 
+2. A _visualizer_ that visualizes the scraped data in a graph that allows week-by-week and day-by-day comparison, enabling you to make an informed decision. 
 
 This solution requires that there is a web page containing some sort of live measurement relating to the problem, for example:
 - the website of your gym if it displays the current number of people in the gym
@@ -56,6 +56,6 @@ The visualizer is a simple web server written in `Node.js`. It graphs the scrape
    node server.js
    ```
    Note that you may need to supply some additional command line arguments, depending on your setup. Run `node server.js --help` for more information.
-3. Open the URL displayed by the previous command.
+3. Open one of the URLs displayed by the previous command (one is for daily, the other for weekly comparison). 
 
 For a full list of command-line options, run `node server.js --help`.

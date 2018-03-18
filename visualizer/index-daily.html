@@ -3,13 +3,13 @@
   <head>
     <title>When should I?</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-    <script src="/data.js"></script>
+    <script src="/data-daily.js"></script>
     <script src="/chart.js"></script>
   </head>
   <body>
     <canvas id="myChart"></canvas>
     <script>
-      populateChart(document.getElementById("myChart"));
+      populateChart(document.getElementById("myChart"), false);
     </script>
   </body>
 </html>
