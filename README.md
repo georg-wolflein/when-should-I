@@ -20,24 +20,24 @@ The scraper is written in `python`. It queries the specified the data, fetches t
 
 1. Install `python3` and `mongodb` and run the following:
 
-    ```bash
-    cd scraper
-    pip3 install -r requirements.txt
-    ```
+   ```bash
+   cd scraper
+   pip3 install -r requirements.txt
+   ```
 
 2. Start `mongodb`.
 3. Set up a cronjob (`crontab -e`) at an interval of your choosing that runs
-    ```
-    ./read_value.py {regex} {url} --database {dburi}
-    ```
-    where
-    - `regex` is a regular expression with the capture group named "value" matching the value to be recorded, for example `diesel\s?:\s(?P<value>\d+\.\d+)` will match `1.29` in `diesel: 1.29`
-    - `url` is the URL to the website that contains the data
-    - `dburi` is the URI to the running instance of mongodb
+   ```
+   ./read_value.py {regex} {url} --database {dburi}
+   ```
+   where
+   - `regex` is a regular expression with the capture group named "value" matching the value to be recorded, for example `diesel\s?:\s(?P<value>\d+\.\d+)` will match `1.29` in `diesel: 1.29`
+   - `url` is the URL to the website that contains the data
+   - `dburi` is the URI to the running instance of mongodb
     
-    Note that if the interval is a value other than 15 minutes, you need to specify the `--interval` option of the visualizer (see next part).
+Note that if the interval is a value other than 15 minutes, you need to specify the `--interval` option of the visualizer (see next part).
 
-    For a full list of options, run `./read_value.py --help`
+For a full list of command-line options, run `./read_value.py --help`.
 
 
 ## Visualizer
@@ -47,9 +47,15 @@ The visualizer is a simple web server written in `Node.js`. It graphs the scrape
 ### Set up the visualizer
 
 1. Install `Node.js` and `npm` and run the following: 
-    ```bash
-    cd display-data
-    npm install
-    ```
-2. Run `node server.js`. Note that you may need to supply some additional command line arguments, depending on your setup. Run `node server.js --help` for more information.
+   ```bash
+   cd visualizer
+   npm install
+   ```
+2. Start the server with
+   ```
+   node server.js
+   ```
+   Note that you may need to supply some additional command line arguments, depending on your setup. Run `node server.js --help` for more information.
 3. Open the URL displayed by the previous command.
+
+For a full list of command-line options, run `node server.js --help`.
