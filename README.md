@@ -25,7 +25,7 @@ The scraper is written in `python`. It queries the specified the data, fetches t
    pip3 install -r requirements.txt
    ```
 
-2. Start `mongodb`.
+2. Start `mongodb` (usually with the command `mongod`).
 3. Set up a cronjob (`crontab -e`) at an interval of your choosing that runs
    ```
    ./read_value.py {regex} {url} --database {dburi}
