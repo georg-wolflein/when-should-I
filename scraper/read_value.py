@@ -13,6 +13,7 @@ VERBOSITY = 0
 DISPLAY_DATE = False
 USE_FLOAT = False
 IGNORE_VALUE = None
+QUANTIZE = 0
 
 class RegexError(Exception): pass
 
@@ -45,7 +46,9 @@ def write_to_database(value, date, uri, database, collection):
 
 def main(regex, url, default, uri, database, collection):
   """Main function for getting the value, outputting, and saving to database."""
-  now = datetime.now().replace(second=0, microsecond=0)
+  now = datetime.now().replace(second = 0, microsecond = 0)
+  if QUANTIZE != 0:
+    now = now.replace(minute = now.minute - (now.minute % QUANTIZE))
   date = now.strftime(DATE_FORMAT) if DISPLAY_DATE else ""
   result = ""
   try:
@@ -76,12 +79,14 @@ if __name__ == "__main__":
   parser.add_argument("--collection", type=str, metavar="COLL", default="results", help="the database collection to store the result in (default is \"results\")")
   parser.add_argument("--use-float", action="store_true", dest="float", help="specify that the value should be stored as a float")
   parser.add_argument("--ignore", type=str, metavar="VALUE", help="do not write to the database if this value occurs")
-  parser.add_argument("--date", "-d", action="store_true", help="specify that the date should be printed")
+  parser.add_argument("--quantize", type=int, metavar="MINUTES", default="0", help="make sure the date is a multiple of the specified number of minutes")
+  parser.add_argument("--date", "-d", action="store_true", help="print the date")
   parser.add_argument("--verbose", "-v", action="count", help="increase level of verbosity (can be supplied multiple times)", default=0)
   args = parser.parse_args()
   DISPLAY_DATE = args.date
   VERBOSITY = args.verbose
   USE_FLOAT = args.float
   IGNORE_VALUE = args.ignore
+  QUANTIZE = args.quantize
   # Execute main function
   main(args.regex, args.url, args.default, args.database, args.name, args.collection)

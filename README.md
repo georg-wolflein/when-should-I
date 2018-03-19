@@ -66,29 +66,33 @@ Command info for the scraper:
 ```
 $ ./read_value.py --help
 usage: read_value.py [-h] [--default VALUE] [--database URI] [--name NAME]
-                     [--collection COLL] [--use-float] [--date] [--verbose]
+                     [--collection COLL] [--use-float] [--ignore VALUE]
+                     [--quantize MINUTES] [--date] [--verbose]
                      regex url
 
 Read a value from a URL
 
 positional arguments:
-  regex              the regular expression with the capture group "value"
-                     matching the value to be recorded
-  url                the URL
+  regex               the regular expression with the capture group "value"
+                      matching the value to be recorded
+  url                 the URL
 
 optional arguments:
-  -h, --help         show this help message and exit
-  --default VALUE    default value to be returned if there is an error and
-                     --verbose is not set (default is "0")
-  --database URI     store the result in a database
-  --name NAME        the database name to store the result in (default is
-                     "results")
-  --collection COLL  the database collection to store the result in (default
-                     is "results")
-  --use-float        specify that the value should be stored as a float
-  --date, -d         specify that the date should be printed
-  --verbose, -v      increase level of verbosity (can be supplied multiple
-                     times)
+  -h, --help          show this help message and exit
+  --default VALUE     default value to be returned if there is an error and
+                      --verbose is not set (default is "0")
+  --database URI      store the result in a database
+  --name NAME         the database name to store the result in (default is
+                      "results")
+  --collection COLL   the database collection to store the result in (default
+                      is "results")
+  --use-float         specify that the value should be stored as a float
+  --ignore VALUE      do not write to the database if this value occurs
+  --quantize MINUTES  make sure the date is a multiple of the specified number
+                      of minutes
+  --date, -d          print the date
+  --verbose, -v       increase level of verbosity (can be supplied multiple
+                      times)
 ```
 
 Command info for the visualizer:
