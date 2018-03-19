@@ -17,6 +17,11 @@ var args = require('yargs')
     describe: 'the port to listen on',
     type: 'number'
   })
+  .option('base', {
+    default: '',
+    describe: 'the base URL of the server, excluding leading and trailing backslash',
+    type: 'string'
+  })
   .option('interval', {
     default: 15,
     describe: 'the interval (in minutes) that data points should be graphed',
@@ -111,22 +116,30 @@ var dataRequestHandler = (req, res, weekly = true) => {
 
 // Create express app (send index.html file)
 var app = express();
+var router = express.Router();
+app.enable('strict routing');
 
 // Define main routes
-app.get('/', (req, res) => res.sendFile(__dirname + '/index-weekly.html'));
-app.get('/weekly', (req, res) => res.sendFile(__dirname + '/index-weekly.html'));
-app.get('/daily', (req, res) => res.sendFile(__dirname + '/index-daily.html'));
+if (args.base != '')
+  app.get('/' + args.base, (req, res) => res.redirect('/' + args.base + '/'));
+router.get('/', (req, res) => res.sendFile(__dirname + '/index-weekly.html'));
+router.get('/weekly', (req, res) => res.sendFile(__dirname + '/index-weekly.html'));
+router.get('/daily', (req, res) => res.sendFile(__dirname + '/index-daily.html'));
 
 // Define chart.js route (send chart.js file)
-app.get('/chart.js', (req, res) => res.sendFile(__dirname + '/chart.js'));
+router.get('/chart.js', (req, res) => res.sendFile(__dirname + '/chart.js'));
 
 // Define data.js route which queries the database and returns the result as a JS file 
-app.get('/data-weekly.js', (req, res) => dataRequestHandler(req, res, true));
-app.get('/data-daily.js', (req, res) => dataRequestHandler(req, res, false));
+router.get('/data-weekly.js', (req, res) => dataRequestHandler(req, res, true));
+router.get('/data-daily.js', (req, res) => dataRequestHandler(req, res, false));
+
+app.use('/' + args.base, router);
 
 // Start the server
 app.listen(args.port, args.host, () => {
   var url = 'http://' + args.host + ':' + args.port;
+  if (args.base != '')
+    url += '/' + args.base
   console.log('started server');
   console.log('visit ' + url + '/weekly for the weekly view');
   console.log('visit ' + url + '/daily for the daily view');
