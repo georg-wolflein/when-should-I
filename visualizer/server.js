@@ -49,11 +49,6 @@ var args = require('yargs')
 // Define aggregate queries
 var weeklyAggregate = [
   {
-    $sort: {
-      date: 1
-    }
-  },
-  {
     $group: {
       _id: {
         year: { $year: '$date' },
@@ -77,11 +72,6 @@ var weeklyAggregate = [
   }
 ];
 var dailyAggregate = [
-  {
-    $sort: {
-      date: 1
-    }
-  },
   {
     $group: {
       _id: {
