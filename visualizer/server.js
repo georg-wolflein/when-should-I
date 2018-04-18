@@ -50,7 +50,7 @@ var args = require('yargs')
 var weeklyAggregate = [
   {
     $sort: {
-      date: -1
+      date: 1
     }
   },
   {
@@ -68,12 +68,18 @@ var weeklyAggregate = [
         }
       }
     }
+  },
+  {
+    $sort: {
+      '_id.year': 1,
+      '_id.week': 1
+    }
   }
 ];
 var dailyAggregate = [
   {
     $sort: {
-      date: -1
+      date: 1
     }
   },
   {
@@ -90,6 +96,13 @@ var dailyAggregate = [
           value: '$value'
         }
       }
+    }
+  },
+  {
+    $sort: {
+      '_id.year': 1,
+      '_id.month': 1,
+      '_id.day': 1
     }
   }
 ];
